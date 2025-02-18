@@ -1,15 +1,42 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.admin_layout')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
+@section('title', 'Dashboard')
+
+@section('content')
+<div class="pagetitle">
+    <h1>Home</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li> -->
+            <!-- <li class="breadcrumb-item">Home</li> -->
+                <!-- <li class="breadcrumb-item active">Blank</li> -->
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Example Card</h5>
+                    <p>Lorem ipsum dolor sit amet consectetur.</p>
+                </div>
             </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Example Card</h5>
+                    <p>Lorem ipsum dolor sit amet consectetur..</p>
+                </div>
+            </div>
+
         </div>
     </div>
-</x-app-layout>
+</section>
+@endsection
