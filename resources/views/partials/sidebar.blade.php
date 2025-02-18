@@ -44,7 +44,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
@@ -84,13 +84,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/dashboard">
+                <a class="nav-link collapsed" href="{{ route('categories.show.index') }}">
                     <i class="bi bi-menu-button-wide"></i>
                     <span>Category</span>
                 </a>
             </li>
+            
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/dashboard">
+                <a class="nav-link collapsed" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Courses</span>
                 </a>
@@ -101,10 +102,6 @@
                     <span>Settings</span>
                 </a>
             </li>
-
-
-
-
             <!-- End Dashboard Nav -->
 
 

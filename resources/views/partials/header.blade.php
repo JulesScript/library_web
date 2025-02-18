@@ -20,14 +20,19 @@
 <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
+<!-- SweetAlert2 CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.16/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.16/dist/sweetalert2.all.min.js"></script>
+
+
 <!-- Template Main CSS File -->
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<!-- jQuery (local) -->
+<script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 
-<!-- jQuery (required for DataTables) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables CSS (local) -->
+<link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
 
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- DataTables JS (local) -->
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>

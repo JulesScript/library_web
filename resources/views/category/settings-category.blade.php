@@ -33,7 +33,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="addCategoryForm" method="POST" action="{{ route('categories.store') }}">
+                            <form id="addCategoryForm" method="POST" action="{{ route('settings-categories.store') }}">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="categoryName" class="form-label">Category Name</label>
@@ -48,8 +48,6 @@
                     </div>
                 </div>
             </div>
-
-
             <!-- DataTable -->
             <div class="table-responsive">
                 <table id="categoryTable" class="table table-striped">
@@ -57,51 +55,10 @@
                         <tr>
                             <th>#</th>
                             <th>Category Name</th>
+                            <th>Created At</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Grade 11</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
-                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Grade 12</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
-                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>College</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
-                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Short Courses</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
-                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Vocational</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
-                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -110,7 +67,8 @@
 
 @section('scripts')
 <script>
-    const categoryStoreUrl = "{{ route('categories.store') }}";
+    const categoryStoreUrl = "{{ route('settings-categories.store') }}";
+    var categoryIndexUrl = @json(route('settings-categories.index'));
 </script>
 <script src="{{ asset('assets/js/category.js') }}"></script>
 @endsection

@@ -21,7 +21,7 @@
             <!-- Row with max 4 columns -->
             <div class="row">
                 <div class="col-md-3 text-center">
-                    <a href="{{ route('categories.index') }}" class="category-link text-dark">
+                    <a href="{{ route('settings-categories.index') }}" class="category-link text-dark">
                         <i class="bi bi-window-plus text-dark" style="font-size: 24px;"></i>
                         <span>Category</span>
                     </a>

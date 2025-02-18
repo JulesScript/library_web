@@ -5,7 +5,7 @@ use App\Http\Controllers\AdminRegisterController;
 use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::middleware([
@@ -21,7 +21,12 @@ Route::middleware([
         return view('settings');
     })->name('settings');
 
-    Route::resource('categories', CategoryController::class);
+    Route::resource('settings-categories', CategoryController::class);
+    Route::resource('show-categories', CategoryController::class)->only(['index', 'show'])->names([
+        'index' => 'categories.show.index',  // Use a custom name to avoid conflicts
+        'show' => 'categories.show.show',    // For the show method
+    ]);
+
 });
 
 
