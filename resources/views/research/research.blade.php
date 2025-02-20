@@ -40,7 +40,7 @@
                                     <select class="form-control" id="course" name="course_id" required>
                                         <option value="" disabled selected>Select Course</option>
                                         @foreach($courses as $course)
-                                            <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                            <option value="{{ $course->id }}">{{ $course->name }} - {{ $course->category_name}} </option>
                                         @endforeach
                                     </select>
                                 </div>

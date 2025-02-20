@@ -1,4 +1,18 @@
 $(document).ready(function () {
+    $("#searchResearch").on("keyup", function () {
+        let searchText = $(this).val().toLowerCase().trim(); // Trim spaces for better matching
+
+        $("#researchContainer .col-md-4").each(function () {
+            let fileName = $(this).find("a").text().toLowerCase();
+
+            if (fileName.includes(searchText) || searchText === "") {
+                $(this).show(); // Show the card if it matches or if search is empty
+            } else {
+                $(this).hide(); // Hide if it doesn't match
+            }
+        });
+    });
+
     if ($("#categoryTable").length) {
         $("#categoryTable").DataTable({
             processing: true,
@@ -30,7 +44,7 @@ $(document).ready(function () {
     $("#addCategoryForm").submit(function (event) {
         event.preventDefault(); // Prevent normal form submission
 
-        let categoryName = $("#category").val(); // Get the category name
+        let categoryName = $("#categoryName").val(); // Get the category name
         let courseName = $("#category").val();
 
         $.ajax({
@@ -128,8 +142,8 @@ $(document).ready(function () {
         $("#courses-section").show();
         $("#category-title").text("Courses under " + categoryName);
 
-           // Update breadcrumb
-           $(".breadcrumb").html(`
+        // Update breadcrumb
+        $(".breadcrumb").html(`
             <li class="breadcrumb-item"><a href="#" id="back-to-categories">Category</a></li>
             <li class="breadcrumb-item active">Courses</li>
         `);
@@ -177,15 +191,15 @@ $(document).ready(function () {
         $(document).on("click", ".course-card", function () {
             let courseId = $(this).data("course-id");
             let courseName = $(this).find(".card-title").text();
-            // console.log("Clicked course ID:", courseId);
+            console.log("Clicked course ID:", courseId);
 
             // Hide courses section, show research section
             $("#courses-section").hide();
             $("#research-section").show();
             $("#course-title").text("Research Files for " + courseName);
 
-                // Update breadcrumb
-           $(".breadcrumb").html(`
+            // Update breadcrumb
+            $(".breadcrumb").html(`
             <li class="breadcrumb-item"><a href="#" id="back-to-categories">Category</a></li>
             <li class="breadcrumb-item">Course</li>
             <li class="breadcrumb-item active">Research</li>
@@ -199,7 +213,7 @@ $(document).ready(function () {
                 method: "GET",
                 data: { course_id: courseId },
                 success: function (response) {
-                    // console.log("Research Response:", response);
+                    console.log("Research Response:", response);
 
                     $("#loadingIndicator").hide();
                     $("#researchContainer").html(""); // ✅ Clear again to prevent duplicate data
@@ -215,15 +229,14 @@ $(document).ready(function () {
                     response.data.forEach(function (research) {
                         researchHtml += `
                             <div class="col-md-4">
-                                <a href="/storage/${research.file_path}" target="_blank" class="text-dark text-decoration-none">
-                                    <div class="card p-3 d-flex align-items-center clickable-card">
-                                        <i class="bi bi-file-earmark-pdf text-danger" style="font-size: 24px;"></i>
-                                        <p class="text-center mb-0">${research.file_name}</p>
-                                    </div>
-                                </a>
+                                <div class="card p-3 d-flex align-items-center">
+                                    <i class="bi bi-file-earmark-pdf text-danger" style="font-size: 24px;"></i>
+                                    <a href="/storage/${research.file_path}" target="_blank" class="text-dark">
+                                        ${research.file_name}
+                                    </a>
+                                </div>
                             </div>`;
                     });
-                    
 
                     $("#researchContainer").html(researchHtml);
                 },
@@ -256,19 +269,5 @@ $(document).ready(function () {
         $("#courses-section").hide();
         $("#category-section").show();
         $("#courses-container").html(""); // Clear courses when going back
-    });
-
-    $("#searchResearch").on("keyup", function () {
-        let searchText = $(this).val().toLowerCase().trim(); // Trim spaces for better matching
-
-        $("#researchContainer .col-md-4").each(function () {
-            let fileName = $(this).find("a").text().toLowerCase();
-
-            if (fileName.includes(searchText) || searchText === "") {
-                $(this).show(); // Show the card if it matches or if search is empty
-            } else {
-                $(this).hide(); // Hide if it doesn't match
-            }
-        });
     });
 });
