@@ -28,23 +28,24 @@
 
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="" class="category-link text-dark">
+                    <a href="{{ route('settings-courses.index') }}" class="category-link text-dark">
                         <i class="bi bi-folder-plus text-dark" style="font-size: 24px;"></i>
                         <span>Courses</span>
                     </a>
                 </div>
-                <!-- <div class="col-md-3 text-center">
-                    <a href="" class="category-link text-dark">
+                <div class="col-md-3 text-center">
+                    <a href="{{ route('settings.researches.index') }}" class="category-link text-dark">
                         <i class="bi bi-file-earmark-text text-dark" style="font-size: 24px;"></i>
                         <span>Research</span>
                     </a>
                 </div>
-                <div class="col-md-3 text-center">
+                
+                {{-- <div class="col-md-3 text-center">
                     <a href="" class="category-link text-dark">
                         <i class="bi bi-person text-dark" style="font-size: 24px;"></i>
                         <span>Students</span>
                     </a>
-                </div> -->
+                </div>  --}}
             </div>
         </div>
     </div>

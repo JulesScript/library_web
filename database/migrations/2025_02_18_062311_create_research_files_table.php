@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade'); // Reference to courses table
             $table->string('file_path'); // Path to the research file
+            $table->string('file_name'); // Original file name
+            $table->string('file_type'); // File type (e.g., pdf, docx)
+            $table->foreignId('uploaded_by')->constrained('users')->onDelete('cascade'); // Who uploaded
             $table->timestamps();
         });
     }

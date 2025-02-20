@@ -71,12 +71,9 @@
         </nav><!-- End Icons Navigation -->
 
     </header><!-- End Header -->
-
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
-
         <ul class="sidebar-nav" id="sidebar-nav">
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/dashboard">
                     <i class="bi bi-grid"></i>
@@ -89,22 +86,21 @@
                     <span>Category</span>
                 </a>
             </li>
-            
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="{{ route('courses.show.index') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Courses</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/settings">
-                    <i class="bi bi-gear"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
-            <!-- End Dashboard Nav -->
-
-
+            
+            @if(Auth::user()->role === 'admin') 
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/settings">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            @endif
         </ul>
-
-    </aside><!-- End Sidebar-->
+    </aside>
+    
