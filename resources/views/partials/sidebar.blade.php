@@ -2,7 +2,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center" style="background-color:#470303;">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="/dashboard" class="logo d-flex align-items-center">
                 <img src="{{asset('assets/img/trace_logo.png') }}" alt="">
                 <span class="d-none d-lg-block text-white">Trace College</span>
             </a>
@@ -43,12 +43,12 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -86,11 +86,11 @@
                     <span>Category</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('courses.show.index') }}">
                     <i class="bi bi-layout-text-window-reverse"></i>
                     <span>Courses</span>
-                </a>
+                </a> -->
             </li>
             
             @if(Auth::user()->role === 'admin') 

@@ -25,7 +25,12 @@
                         <i class="bi bi-window-plus text-dark" style="font-size: 24px;"></i>
                         <span>Category</span>
                     </a>
-
+                </div>
+                <div class="col-md-3 text-center">
+                    <a href="{{ route('settings-grades.index') }}" class="category-link text-dark">
+                        <i class="bi bi-mortarboard text-dark" style="font-size: 24px;"></i>
+                        <span>Grade</span>
+                    </a>
                 </div>
                 <div class="col-md-3 text-center">
                     <a href="{{ route('settings-courses.index') }}" class="category-link text-dark">
@@ -39,7 +44,7 @@
                         <span>Research</span>
                     </a>
                 </div>
-                
+
                 {{-- <div class="col-md-3 text-center">
                     <a href="" class="category-link text-dark">
                         <i class="bi bi-person text-dark" style="font-size: 24px;"></i>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Courses;
+use App\Models\YearLevel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -11,50 +12,60 @@ class CoursesController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::all();
+        $yearlevels = YearLevel::all();
 
-        // Handle the AJAX request for DataTables (used for settings-courses)
         if ($request->ajax() && $request->is('settings-courses*')) {
-            // Eager load category relationship
-            $courses = Courses::with('category')->select(['id', 'category_id', 'name', 'created_at']);
+            $courses = Courses::with(['yearlevel.category'])
+                ->select([
+                    'id',
+                    'yearlevel_id',
+                    'name as course_name',
+                    'created_at'
+                ]);
 
             return DataTables::of($courses)
                 ->addColumn('category_name', function ($course) {
-                    return $course->category->name ?? 'No Category'; // Get category name, handle null case
+                    // Access the category name through the yearlevel relationship.
+                    return ($course->yearlevel && $course->yearlevel->category)
+                        ? $course->yearlevel->category->name
+                        : 'No Category';
                 })
+
                 ->addColumn('action', function ($course) {
                     return '<button class="btn btn-danger delete-courses" data-id="' . $course->id . '">Delete</button>';
                 })
-                ->rawColumns(['action']) // Ensure the button is rendered correctly as raw HTML
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
-        // Handle the regular request for showing courses (for show-courses route)
         if ($request->is('show-courses*')) {
-            $courses = Courses::with('category')->get(); // Eager load category relationship
+            $courses = Courses::with('yearlevel.category')->get();
             return view('courses.show-courses', compact('courses'));
         }
 
-        return view('courses.settings-courses', compact('categories'));
+        return view('courses.settings-courses', compact('yearlevels'));
     }
+
+
 
 
     public function store(Request $request)
     {
         // Validate the input
         $request->validate([
-            'category_id' => 'required|integer|exists:categories,id', // Ensure it exists in the database
-            'course_name' => 'required|string|max:255'
+            'yearlevel_id' => 'required|integer|exists:year_levels,id', // Ensure it exists in the year_levels table
+            'course_name'   => 'required|string|max:255'
         ]);
 
-        // Create the course
+        // Create the course using the correct property name
         $course = Courses::create([
-            'category_id' => $request->category_id,
-            'name' => $request->course_name,
+            'yearlevel_id' => $request->yearlevel_id,  // Changed from $request->yearlevelId to $request->yearlevel_id
+            'name'         => $request->course_name,
         ]);
 
         return response()->json(['settings-courses' => $course]);
     }
+
 
     public function destroy($id)
     {
@@ -68,17 +79,18 @@ class CoursesController extends Controller
         }
     }
 
-    public function filterCourses(Request $request)
+    public function filter(Request $request)
     {
-        $courses = Courses::where('category_id', $request->category_id)->get();
+        $yearlevelId = $request->input('yearlevel_id');
+        $courses = Courses::where('yearlevel_id', $yearlevelId)->get();
+
         return response()->json(['courses' => $courses]);
     }
-    
+
+
     public function filterByYear(Request $request)
     {
         $courses = Courses::where('year_level_id', $request->year_id)->get();
         return response()->json(['courses' => $courses]);
     }
-    
-
 }

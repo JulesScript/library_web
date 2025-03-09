@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Courses extends Model
 {
     use HasFactory;
-    protected $fillable = ['category_id', 'name'];
+    protected $fillable = ['yearlevel_id', 'name'];
+
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function yearLevel()
+    // In App\Models\Course.php
+    public function yearlevel()
     {
-        return $this->belongsTo(YearLevel::class);
+        return $this->belongsTo(YearLevel::class, 'yearlevel_id');
     }
-
-
 }

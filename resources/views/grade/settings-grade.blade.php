@@ -1,15 +1,15 @@
 @extends('layouts.admin_layout')
 
-@section('title', 'Courses')
+@section('title', 'Year Level')
 
 @section('content')
 
 <div class="pagetitle">
-    <h1>Courses</h1>
+    <h1>Year Level</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">Settings</li>
-            <li class="breadcrumb-item active">Courses</li>
+            <li class="breadcrumb-item active">Year level</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
@@ -18,10 +18,10 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <h5 class="card-title">Courses List</h5>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCoursesModal">
+                <h5 class="card-title">Year level List</h5>
+                <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCoursesModal">
                     <i class="bi bi-plus-lg"></i> Add Courses
-                </button>
+                </button> -->
             </div>
 
             <!-- Add Category Modal -->
@@ -36,12 +36,10 @@
                             <form id="addCoursesForm" method="POST" action="{{ route('settings-courses.store') }}">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="category" class="form-label">Year level</label>
-                                    <select class="form-control" id="yearlevel" name="yearlevel_id" required>
-                                        <option value="" disabled selected>Select Year level</option>
-                                        @foreach($yearlevels as $yearlevel)
-                                            <option value="{{ $yearlevel->id }}">{{ $yearlevel->category->name }} - {{ $yearlevel->name }}</option>
-                                        @endforeach
+                                    <label for="category" class="form-label">Category</label>
+                                    <select class="form-control" id="category" name="category_id" required>
+                                        <option value="" disabled selected>Select Category</option>
+                               
                                     </select>
                                 </div>
                             
@@ -62,15 +60,13 @@
             </div>
             <!-- DataTable -->
             <div class="table-responsive">
-                <table id="coursesTable" class="table table-striped" data-index-url="{{ route('settings-courses.index') }}">
+                <table id="yearlevelTable" class="table table-striped"  data-index-url="{{ route('settings-grades.index') }}">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Category Name</th>
-                            <th>Year level</th>
-                            <th>Courses</th>
+                            <th>Year Level</th>
                             <th>Created At</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                 </table>
@@ -81,9 +77,8 @@
 
 @section('scripts')
 <script>
-    const coursesStoreUrl = "{{ route('settings-courses.store') }}";
 </script>
-<script src="{{ asset('assets/js/courses.js') }}"></script>
+<script src="{{ asset('assets/js/yearlevel.js') }}"></script>
 @endsection
 
 

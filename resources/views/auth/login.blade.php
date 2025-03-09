@@ -14,6 +14,9 @@
             </div>
             @endif
 
+
+            <label for="register" class="block text-white text-lg mb-5 text-center">Login Account</label>
+
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
@@ -45,16 +48,23 @@
                 </label>
     </div> --}}
 
+
+    <div class="flex items-center justify-end mt-4">
+        <a class="underline text-sm text-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
+            Don't have account? click here
+        </a>
+
+        <x-button class="ms-4 bg-white" style="color: #470303;">
+            {{ __('Log in') }}
+        </x-button>
+    </div>
+
     <div class="flex items-center justify-end mt-4">
         {{-- @if (Route::has('password.request'))
                         <a class="underline text-sm text-gray-300 hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
         {{ __('Forgot your password?') }}
         </a>
         @endif --}}
-
-        <x-button class="w-full bg-white py-3 text-lg font-semibold flex items-center justify-center" style="color: #470303;">
-            {{ __('Log in') }}
-        </x-button>
 
 
     </div>

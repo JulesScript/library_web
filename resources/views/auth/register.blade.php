@@ -7,6 +7,8 @@
 
             <x-validation-errors class="mb-4" />
 
+            <label for="register" class="block text-white text-lg mb-5 text-center">Register Account</label>
+
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
@@ -22,6 +24,17 @@
                         autocomplete="name"
                         placeholder="Enter your name" />
                 </div>
+
+                <div>
+                    <select id="education_level" name="education_level"
+                        class="block mt-4  w-full text-white placeholder-gray-300 bg-gray-500 bg-opacity-30 border border-gray-400 
+        focus:bg-opacity-50 focus:ring-2 focus:ring-white transition-all duration-300 ease-in-out px-4 py-2 text-lg rounded-md">
+                        <option value="" disabled selected>Select your education level</option>
+                        <option value="shs" {{ old('education_level') == 'shs' ? 'selected' : '' }}>Senior High School (SHS)</option>
+                        <option value="college" {{ old('education_level') == 'college' ? 'selected' : '' }}>College</option>
+                    </select>
+                </div>
+
 
                 <div class="mt-4">
                     <x-input id="email"

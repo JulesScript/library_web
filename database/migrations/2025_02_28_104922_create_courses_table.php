@@ -9,12 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Reference to categories table
-            $table->string('name'); // Name of the course
+            // This creates an unsigned big integer and adds a foreign key constraint to the year_levels table.
+            $table->foreignId('yearlevel_id')
+                ->constrained('year_levels')
+                ->onDelete('cascade');
+            $table->string('name');
             $table->timestamps();
         });
     }

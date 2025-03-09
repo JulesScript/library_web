@@ -9,32 +9,37 @@ use Yajra\DataTables\Facades\DataTables;
 class CategoryController extends Controller
 {
     // Show the list of categories
+
     public function index(Request $request)
     {
-        // Handle the AJAX request for DataTables (used for settings-categories)
-        if ($request->ajax() && $request->is('settings-categories*')) {
-            $categories = Category::select(['id', 'name', 'created_at']);
+        // Filter categories based on the user's education level.
+        $educationLvl = auth()->user()->education_level;
+        // dd($educationLvl);
+        if ($educationLvl === 'shs') {
+            $categories = Category::where('name', '!=', 'college')->get();
+        } elseif ($educationLvl === 'college') {
+            $categories = Category::whereNotIn('name', ['shs', 'senior high school'])->get();
+        } else {
+            $categories = Category::all();
+        }
 
+        // Handle AJAX request for settings-categories (if applicable).
+        if ($request->ajax() && $request->is('settings-categories*')) {
             return DataTables::of($categories)
                 ->addColumn('action', function ($category) {
-                    // Button for deleting category
                     return '<button class="btn btn-danger delete-category" data-id="' . $category->id . '">Delete</button>';
                 })
-                ->rawColumns(['action']) // Ensure the button is rendered correctly as raw HTML
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
-        // Handle the regular request for showing categories (for show-categories route)
+        // For show-categories requests, pass the filtered $categories to the view.
         if ($request->is('show-categories*')) {
-            // Get all categories
-            $categories = Category::all();
-
-            // Pass categories to the view
             return view('category.show-category', compact('categories'));
         }
 
-        // Default return for settings-categories (you can render the full management page here)
-        return view('category.settings-category');
+        // Default: return the settings page, also with the filtered categories.
+        return view('category.settings-category', compact('categories'));
     }
 
 
@@ -48,8 +53,9 @@ class CategoryController extends Controller
 
         // Create the category
         $category = Category::create([
-            'name' => $request->category_name,
+            'name' => strtolower($request->category_name),
         ]);
+
 
         // Return a response with the new category data
         return response()->json(['settings-category' => $category]);
@@ -66,5 +72,4 @@ class CategoryController extends Controller
             return response()->json(['error' => 'Error deleting category.'], 500);
         }
     }
-
 }

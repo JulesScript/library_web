@@ -7,31 +7,46 @@ use App\Models\Courses;
 use App\Models\Research;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
 class DashboardController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
-        $totalResearches = Research::count();
-        $totalCourses = Courses::count();
-        $totalCategories = Category::count();
-        $recentResearches = Research::latest()->limit(5)->get();
+        $educationLvl = auth()->user()->education_level; // e.g., 'shs' or 'college'
+        // dd($educationLvl);
+        // Build a query to filter research files based on the user's education level.
+        $researchQuery = Research::query();
 
-        // Get research count per month for the last 12 months
-        $researchPerMonth = Research::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
-            ->groupBy('year', 'month')
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
-            ->get();
+        if ($educationLvl === 'shs') {
+            $researchQuery->whereHas('course.yearlevel.category', function ($q) {
+                $q->whereIn('name', ['shs', 'senior high school']);
+            });
+            // dd($educationLvl);
+        } elseif ($educationLvl === 'college') {
+            $researchQuery->whereHas('course.yearlevel.category', function ($q) {
+                $q->where('name', 'college');
+            });
+            // dd($educationLvl);
 
-        $labels = [];
-        $data = [];
-
-        foreach ($researchPerMonth as $item) {
-            $monthName = Carbon::create()->month($item->month)->format('F'); // Convert month number to name
-            $labels[] = $monthName;
-            $data[] = $item->count;
         }
 
-        return view('dashboard', compact('totalResearches', 'totalCourses', 'totalCategories', 'recentResearches', 'labels', 'data'));
+
+
+        $totalResearchFiles = $researchQuery->count();
+        $recentUploadsCount = $researchQuery->where('created_at', '>=', now()->subMonth())->count();
+
+        return view('dashboard', compact(
+            'totalResearchFiles',
+            'recentUploadsCount'
+        ));
     }
+
+
+
+    // public function index()
+    // {
+
+    //     return view('dashboard');
+    // }
 }

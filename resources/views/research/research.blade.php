@@ -40,21 +40,21 @@
                                     <select class="form-control" id="course" name="course_id" required>
                                         <option value="" disabled selected>Select Course</option>
                                         @foreach($courses as $course)
-                                            <option value="{{ $course->id }}">{{ $course->name }} - {{ $course->category_name}} </option>
+                                        <option value="{{ $course->id }}">{{ $course->yearlevel->category->name ?? 'No Category' }} - {{ $course->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="researchName" class="form-label">Research Name</label>
                                     <input type="text" class="form-control" id="researchName" name="research_name" required>
                                 </div>
-                            
+
                                 <div class="mb-3">
                                     <label for="researchFile" class="form-label">Upload Research File</label>
                                     <input type="file" class="form-control" id="researchFile" name="file_path" required>
                                 </div>
-                            
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save Research</button>
@@ -66,17 +66,18 @@
             </div>
             <!-- DataTable -->
             <div class="table-responsive">
-                <table id="researchTable" class="table table-striped">
+                <table id="researchTable" class="table table-striped" data-index-url="{{ route('settings.researches.index') }}">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Category Name</th>
+                            <th>Year level</th>
                             <th>Courses</th>
                             <th>Research File Name</th> <!-- Added for file_path -->
                             <th>Created At</th>
                             <th>Actions</th>
                         </tr>
-                        
+
                     </thead>
                 </table>
             </div>
@@ -87,7 +88,7 @@
 @section('scripts')
 <script>
     const researchStoreUrl = "{{ route('settings.researches.store') }}";
-    var researchesIndexUrl = @json(route('settings.researches.index'));
+    // var researchesIndexUrl = @json(route('settings.researches.index'));
 </script>
 <script src="{{ asset('assets/js/research.js') }}"></script>
 @endsection

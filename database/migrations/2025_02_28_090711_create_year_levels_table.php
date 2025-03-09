@@ -9,20 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('year_levels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id'); // Link to categories table
-            $table->string('name'); // Example: "1st Year College"
+            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Connect to Category
+            $table->string('name'); // Example: Grade 11, 1st Year, etc.
             $table->timestamps();
-
-            // Foreign key constraint
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('year_levels');
     }

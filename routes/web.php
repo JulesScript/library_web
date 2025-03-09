@@ -6,6 +6,8 @@ use App\Http\Controllers\ResearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminRegisterController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GradeController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     // If the user is authenticated, redirect to the dashboard
@@ -13,7 +15,7 @@ Route::get('/', function () {
         return redirect()->route('dashboard');
     }
     // Otherwise, show the login page
-    return view('auth.login'); 
+    return view('auth.login');
 })->name('home');
 
 
@@ -37,6 +39,7 @@ Route::middleware([
         })->name('settings');
 
         Route::resource('settings-categories', CategoryController::class);
+        Route::resource('settings-grades', GradeController::class);
         Route::resource('settings-courses', CoursesController::class);
         Route::resource('settings-researches', ResearchController::class)->names('settings.researches');
     });
@@ -46,18 +49,18 @@ Route::middleware([
 
     // ✅ Public access for categories and courses (view-only)
     Route::resource('show-categories', CategoryController::class)->only(['index', 'show'])->names([
-        'index' => 'categories.show.index',  
-        'show' => 'categories.show.show',    
+        'index' => 'categories.show.index',
+        'show' => 'categories.show.show',
     ]);
 
     Route::resource('show-courses', CoursesController::class)->only(['index', 'show'])->names([
-        'index' => 'courses.show.index',  
-        'show' => 'courses.show.show',    
+        'index' => 'courses.show.index',
+        'show' => 'courses.show.show',
     ]);
 
+    Route::get('/yearlevels/filter', [GradeController::class, 'filterYearLevels'])->name('yearlevels.filter');
     // ✅ Course filtering for all users
-    Route::get('/courses/filter', [CoursesController::class, 'filterCourses'])->name('courses.filter');
-    
+    Route::get('/courses/filter', [CoursesController::class, 'filter'])->name('courses.filter');
 });
 
 

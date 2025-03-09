@@ -1,23 +1,31 @@
 $(document).ready(function () {
+
+
+    var researchesIndexUrl = $("#researchTable").data("index-url");
     if ($("#researchTable").length) {
         $("#researchTable").DataTable({
             processing: true,
             serverSide: true,
-            ajax: researchesIndexUrl, 
+            ajax: researchesIndexUrl, // Make sure this variable points to your research AJAX endpoint
             pageLength: 10, // Limits rows per page
             columns: [
                 { data: "id", name: "id" },
-                { data: "category_name", name: "category.name" }, // Display Category
-                { data: "course_name", name: "course.name" },
+                { data: "category_name", name: "category.name", defaultContent: "No Category" },
+                { data: "year_level", name: "year_level", defaultContent: "No Year Level" },
+                { data: "course_name", name: "course.name", defaultContent: "No Course" },
                 { data: "file_name", name: "file_name" },
-                { data: "created_at", name: "created_at", render: function (data) {
-                    return moment(data).format("MM/DD/YYYY");
-                }},
+                {
+                    data: "created_at",
+                    name: "created_at",
+                    render: function (data, type, row) {
+                        return moment(data).format("MM/DD/YYYY");
+                    }
+                },
                 { data: "action", name: "action", orderable: false, searchable: false },
             ],
         });
-        
     }
+
 
     // Get the research store URL
     const researchStoreUrl = $("#addResearchForm").attr("action");
